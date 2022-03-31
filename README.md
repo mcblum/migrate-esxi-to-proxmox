@@ -26,8 +26,8 @@ What you'll need:
 # Create the Proxmox VM
 1. In the Proxmox UI, create a new VM and use a config that exactly mirrors your ESXi setup. Make sure you:  
   a. Use `raw` for the harddrive format   
-  b. Make the hard drive the exact same size as what it was
-  c. Use a datastore that _isn't_ `local-lvm` such as `local` or an NFS share. You'll need access to the path in order to make this work
+  b. Make the hard drive the exact same size as what it was  
+  c. Use a datastore that _isn't_ `local-lvm` such as `local` or an NFS share. You'll need access to the path in order to make this work  
   d. Use the same MAC address as was created for you in ESXi. You can find that in your VM config in the VSphere client or in settings in VMWare Fusion (what I use to quickly browse VMs)
 2. Now that your VM is created, go find that hard disk. It will probably be somewhere like `/mnt/pve/nfs-share/images/{120}` where 120 is the ID of the Proxmox VM. If you used local, find that path, I used NFS so I don't know where it is.
 3. In that directory you'll see a file like m-120-disk-0.raw. Do the unthinkable and `rm ./m-120-disk-0.raw`
@@ -47,11 +47,11 @@ SSH to the Proxmox host and run `cp /mnt/nfs-share-you-mounted-on-both-machines/
 1. In the Proxmox UI, go to `Options` and select `Boot Order`. Enable `IDE` and drag it so that it's first
 
 # Start and reconfigure the VM
-1. Start the VM and weap as it boots like the sweet, sweet snowflake that it is
+1. Start the VM and weep as it boots like the sweet, sweet snowflake that it is
 2. Log in to the vm
 3. Run `ip link show` and make note of the new interface name (mine is ens18)
 4. If you're like me, VMWare used the interface `ens32` so you'll need to update your networking
-5. Run `vim /etc/network/interfaces` and change any references to `ens32` to `ens18`
+5. Run `vim /etc/network/interfaces` or use nano if you're a monster and change any references to `ens32` to `ens18`
 6. Run `ifconfig ens18 up` (or whatever your interface name is)
 7. Run `ifconfig` to see that it's up
 8. Reboot
